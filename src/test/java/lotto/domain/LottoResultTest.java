@@ -30,4 +30,14 @@ public class LottoResultTest {
 
         assertThat(result.getTotalPrizeMoney()).isEqualTo(60000);
     }
+
+    @Test
+    void 수익률_계산() {
+        Map<LottoRank, Integer> counts = Map.of(
+                LottoRank.FIFTH, 1
+        );
+        LottoResult result = new LottoResult(counts, 8000);
+
+        assertThat(result.getProfitRate()).isEqualTo(62.5);
+    }
 }
