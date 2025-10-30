@@ -21,5 +21,11 @@ public class Lotto {
         if (uniqueNumbers.size() != numbers.size()) {
             throw new IllegalArgumentException("[ERROR] 로또 번호는 중복될 수 없습니다.");
         }
+
+        for (Integer number : numbers) {
+            if (number < 1 || number > 45) {
+                throw new IllegalArgumentException("[ERROR] 로또 번호는 1~45 범위를 입력할 수 있습니다.");
+            }
+        }
     }
 }
