@@ -1,5 +1,6 @@
 package lotto;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,5 +28,13 @@ public class Lotto {
                 throw new IllegalArgumentException("[ERROR] 로또 번호는 1~45 범위를 입력할 수 있습니다.");
             }
         }
+    }
+
+    public boolean contains(int number) {
+        return numbers.contains(number);
+    }
+
+    public List<Integer> getNumbers() {
+        return new ArrayList<>(numbers);
     }
 }
