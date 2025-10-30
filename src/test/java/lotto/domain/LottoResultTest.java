@@ -19,4 +19,15 @@ public class LottoResultTest {
         assertThat(result.getCountByRank(LottoRank.FOURTH)).isEqualTo(2);
 
     }
+
+    @Test
+    void 총_상금_계산() {
+        Map<LottoRank, Integer> counts = Map.of(
+                LottoRank.FIFTH, 2,
+                LottoRank.FOURTH, 1
+        );
+        LottoResult result = new LottoResult(counts, 10000);
+
+        assertThat(result.getTotalPrizeMoney()).isEqualTo(60000);
+    }
 }
