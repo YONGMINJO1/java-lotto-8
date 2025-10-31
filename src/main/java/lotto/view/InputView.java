@@ -9,19 +9,37 @@ public class InputView {
 
     public int readPurchaseAmount() {
         System.out.println("구입금액을 입력해 주세요.");
-        return parseIntInput(Console.readLine());
+        while (true) {
+            try {
+                return parseIntInput(Console.readLine());
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 
     public List<Integer> readWinningNumbers() {
         System.out.println();
         System.out.println("당첨 번호를 입력해 주세요.");
-        return parseNumberList(Console.readLine());
+        while (true) {
+            try {
+                return parseNumberList(Console.readLine());
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 
     public int readBonusNumber() {
         System.out.println();
         System.out.println("보너스 번호를 입력해 주세요.");
-        return parseIntInput(Console.readLine());
+        while (true) {
+            try {
+                return parseIntInput(Console.readLine());
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 
     public int parseIntInput(String input) {
