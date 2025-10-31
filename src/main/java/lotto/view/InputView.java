@@ -18,6 +18,12 @@ public class InputView {
         return parseNumberList(Console.readLine());
     }
 
+    public int readBonusNumber() {
+        System.out.println();
+        System.out.println("보너스 번호를 입력해 주세요.");
+        return parseIntInput(Console.readLine());
+    }
+
     public int parseIntInput(String input) {
         try {
             return Integer.parseInt(input);

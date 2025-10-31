@@ -36,4 +36,8 @@ public class WinningLotto {
         }
         return count;
     }
+
+    public int getBonusNumber() {
+        return bonusNumber;
+    }
 }
