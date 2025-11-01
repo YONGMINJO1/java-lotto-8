@@ -25,16 +25,23 @@ public class LottoController {
     }
 
     public void run() {
-        int purchaseAmount = inputView.readPurchaseAmount();
-        validatePurchaseAmount(purchaseAmount);
-
-        LottoTickets tickets = purchaseLottos(purchaseAmount);
+        LottoTickets tickets = purchaseLottos();
         outputView.printPurchasedLottos(tickets);
 
         WinningLotto winning = createWinningLotto();
 
-        LottoResult result = calculateResult(tickets, winning, purchaseAmount);
+        LottoResult result = calculateResult(tickets, winning);
         outputView.printStatistics(result);
+//        int purchaseAmount = inputView.readPurchaseAmount();
+//        validatePurchaseAmount(purchaseAmount);
+//
+//        LottoTickets tickets = purchaseLottos(purchaseAmount);
+//        outputView.printPurchasedLottos(tickets);
+//
+//        WinningLotto winning = createWinningLotto();
+//
+//        LottoResult result = calculateResult(tickets, winning, purchaseAmount);
+//        outputView.printStatistics(result);
     }
 
     private void validatePurchaseAmount(int amount) {
@@ -46,23 +53,51 @@ public class LottoController {
         }
     }
 
-    private LottoTickets purchaseLottos(int purchaseAmonut) {
-        int lottoCount = purchaseAmonut / 1000;
-        List<Lotto> lottos = lottoGenerator.generate(lottoCount);
-        return new LottoTickets(lottos);
+    private int purchaseAmount;
+
+    private LottoTickets purchaseLottos() {
+        while (true) {
+            try {
+                int purchaseAmount = inputView.readPurchaseAmount();
+                validatePurchaseAmount(purchaseAmount);
+
+                this.purchaseAmount = purchaseAmount;
+                int lottoCount = purchaseAmount / 1000;
+                List<Lotto> lottos = lottoGenerator.generate(lottoCount);
+                this.purchaseAmount = purchaseAmount;
+                return new LottoTickets(lottos);
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+//        int lottoCount = purchaseAmonut / 1000;
+//        List<Lotto> lottos = lottoGenerator.generate(lottoCount);
+//        return new LottoTickets(lottos);
     }
 
     private WinningLotto createWinningLotto() {
-        List<Integer> winningNumbers = inputView.readWinningNumbers();
-        Lotto winningLotto = new Lotto(winningNumbers);
+        while (true) {
+            try {
+                List<Integer> winningNumbers = inputView.readWinningNumbers();
+                Lotto winningLotto = new Lotto(winningNumbers);
 
-        int bonusNumber = inputView.readBonusNumber();
-        return new WinningLotto(winningLotto, bonusNumber);
+                int bonusNumber = inputView.readBonusNumber();
+                return new WinningLotto(winningLotto, bonusNumber);
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+//        List<Integer> winningNumbers = inputView.readWinningNumbers();
+//        Lotto winningLotto = new Lotto(winningNumbers);
+//
+//        int bonusNumber = inputView.readBonusNumber();
+//        return new WinningLotto(winningLotto, bonusNumber);
     }
 
-    private LottoResult calculateResult(LottoTickets tickets, WinningLotto winning, int purchaseAmonut) {
+    private LottoResult calculateResult(LottoTickets tickets, WinningLotto winning) {
         Map<LottoRank, Integer> rankCounts = calculateRanks(tickets, winning);
-        return new LottoResult(rankCounts, purchaseAmonut);
+        return new LottoResult(rankCounts, purchaseAmount);
     }
 
     private Map<LottoRank, Integer> calculateRanks(LottoTickets tickets, WinningLotto winning) {
