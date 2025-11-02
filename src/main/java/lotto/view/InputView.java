@@ -6,15 +6,31 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class InputView {
+    private static final int LOTTO_PRICE = 1000;
 
     public int readPurchaseAmount() {
         System.out.println("구입금액을 입력해 주세요.");
         while (true) {
             try {
-                return parseIntInput(Console.readLine());
+                int amount = parseIntInput(Console.readLine());
+                validatePurchaseAmount(amount);
+                return amount;
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
+        }
+    }
+
+    private void validatePurchaseAmount(int amount) {
+        if (amount % LOTTO_PRICE != 0) {
+            throw new IllegalArgumentException(
+                    String.format("[ERROR] 구입 금액은 %,d원 단위여야 합니다.", LOTTO_PRICE)
+            );
+        }
+        if (amount < LOTTO_PRICE) {
+            throw new IllegalArgumentException(
+                    String.format("[ERROR] 구입 금액은 %,d원 이상이어야 합니다.", LOTTO_PRICE)
+            );
         }
     }
 

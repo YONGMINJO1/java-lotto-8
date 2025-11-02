@@ -14,9 +14,12 @@ import lotto.view.InputView;
 import lotto.view.OutputView;
 
 public class LottoController {
+    public static final int LOTTO_PRICE = 1000;
+
     private final InputView inputView;
     private final OutputView outputView;
     private final LottoGenerator lottoGenerator;
+    private int purchaseAmount;
 
     public LottoController(InputView inputView, OutputView outputView, LottoGenerator lottoGenerator) {
         this.inputView = inputView;
@@ -32,48 +35,21 @@ public class LottoController {
 
         LottoResult result = calculateResult(tickets, winning);
         outputView.printStatistics(result);
-//        int purchaseAmount = inputView.readPurchaseAmount();
-//        validatePurchaseAmount(purchaseAmount);
-//
-//        LottoTickets tickets = purchaseLottos(purchaseAmount);
-//        outputView.printPurchasedLottos(tickets);
-//
-//        WinningLotto winning = createWinningLotto();
-//
-//        LottoResult result = calculateResult(tickets, winning, purchaseAmount);
-//        outputView.printStatistics(result);
     }
-
-    private void validatePurchaseAmount(int amount) {
-        if (amount % 1000 != 0) {
-            throw new IllegalArgumentException("[ERROR] 구입 금액은 1,000원 단위여야 합니다.");
-        }
-        if (amount < 1000) {
-            throw new IllegalArgumentException("[ERROR] 구입 금액은 1,000원 이상이어야 합니다.");
-        }
-    }
-
-    private int purchaseAmount;
 
     private LottoTickets purchaseLottos() {
-        while (true) {
-            try {
-                int purchaseAmount = inputView.readPurchaseAmount();
-                validatePurchaseAmount(purchaseAmount);
+        int amount = inputView.readPurchaseAmount();
+        this.purchaseAmount = amount;
 
-                this.purchaseAmount = purchaseAmount;
-                int lottoCount = purchaseAmount / 1000;
-                List<Lotto> lottos = lottoGenerator.generate(lottoCount);
-                this.purchaseAmount = purchaseAmount;
-                return new LottoTickets(lottos);
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-            }
-        }
+        int lottoCount = amount / LOTTO_PRICE;
+        List<Lotto> lottos = lottoGenerator.generate(lottoCount);
+        return new LottoTickets(lottos);
+    }
 
-//        int lottoCount = purchaseAmonut / 1000;
-//        List<Lotto> lottos = lottoGenerator.generate(lottoCount);
-//        return new LottoTickets(lottos);
+    private LottoTickets generateLottoTickets(int amount) {
+        int lottoCount = amount / LOTTO_PRICE;
+        List<Lotto> lottos = lottoGenerator.generate(lottoCount);
+        return new LottoTickets(lottos);
     }
 
     private WinningLotto createWinningLotto() {
@@ -88,11 +64,6 @@ public class LottoController {
                 System.out.println(e.getMessage());
             }
         }
-//        List<Integer> winningNumbers = inputView.readWinningNumbers();
-//        Lotto winningLotto = new Lotto(winningNumbers);
-//
-//        int bonusNumber = inputView.readBonusNumber();
-//        return new WinningLotto(winningLotto, bonusNumber);
     }
 
     private LottoResult calculateResult(LottoTickets tickets, WinningLotto winning) {
