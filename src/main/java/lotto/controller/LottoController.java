@@ -14,7 +14,7 @@ import lotto.view.InputView;
 import lotto.view.OutputView;
 
 public class LottoController {
-    public static final int LOTTO_PRICE = 1000;
+    private static final int LOTTO_PRICE = 1000;
 
     private final InputView inputView;
     private final OutputView outputView;
