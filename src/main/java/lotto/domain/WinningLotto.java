@@ -3,6 +3,9 @@ package lotto.domain;
 import lotto.Lotto;
 
 public class WinningLotto {
+    public static final int MIN_LOTTO_NUMBER = 1;
+    public static final int MAX_LOTTO_NUMBER = 45;
+
     private final Lotto winningNumbers;
     private final int bonusNumber;
 
@@ -16,8 +19,10 @@ public class WinningLotto {
     }
 
     private void validateBonusNumberRange(int bonusNumber) {
-        if (bonusNumber < 1 || bonusNumber > 45) {
-            throw new IllegalArgumentException("[ERROR] 보너스 번호는 1~45 사이여야 합니다.");
+        if (bonusNumber < MIN_LOTTO_NUMBER || bonusNumber > MAX_LOTTO_NUMBER) {
+            throw new IllegalArgumentException(
+                    String.format("[ERROR] 보너스 번호는 %d~%d 사이여야 합니다.",
+                    MIN_LOTTO_NUMBER, MAX_LOTTO_NUMBER));
         }
     }
 
