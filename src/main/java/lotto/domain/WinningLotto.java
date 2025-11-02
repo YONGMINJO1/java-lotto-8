@@ -3,8 +3,8 @@ package lotto.domain;
 import lotto.Lotto;
 
 public class WinningLotto {
-    public static final int MIN_LOTTO_NUMBER = 1;
-    public static final int MAX_LOTTO_NUMBER = 45;
+    private static final int MIN_LOTTO_NUMBER = 1;
+    private static final int MAX_LOTTO_NUMBER = 45;
 
     private final Lotto winningNumbers;
     private final int bonusNumber;
@@ -33,13 +33,9 @@ public class WinningLotto {
     }
 
     public int countMatches(Lotto lotto) {
-        int count = 0;
-        for (Integer number : winningNumbers.getNumbers()) {
-            if (lotto.contains(number)) {
-                count++;
-            }
-        }
-        return count;
+        return (int) winningNumbers.getNumbers().stream()
+                .filter(lotto::contains)
+                .count();
     }
 
     public int getBonusNumber() {
