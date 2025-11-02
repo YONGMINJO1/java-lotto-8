@@ -22,8 +22,8 @@ public enum LottoRank {
 
     public static Optional<LottoRank> of(int matchCount, boolean bonusMatch) {
         return Arrays.stream(values())
-                .filter(rank -> rank.matchCount == matchCount)
-                .filter(rank-> !rank.requireBonus || bonusMatch)
+                .filter(rank -> rank.matchCount == matchCount
+                 && (!rank.requireBonus || bonusMatch))
                 .findFirst();
     }
 
