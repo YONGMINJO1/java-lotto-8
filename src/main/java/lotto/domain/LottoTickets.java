@@ -8,9 +8,13 @@ public class LottoTickets {
     private final List<Lotto> lottos;
 
     public LottoTickets(List<Lotto> lottos) {
+        validate(lottos);
+        this.lottos = new ArrayList<>(lottos);
+    }
+
+    private void validate(List<Lotto> lottos) {
         validateNull(lottos);
         validateNotEmpty(lottos);
-        this.lottos = new ArrayList<>(lottos);
     }
 
     private void validateNull(List<Lotto> lottos) {
